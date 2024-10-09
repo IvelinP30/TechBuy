@@ -1,0 +1,123 @@
+.nav-bar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    width: 300px;
+    background-color: var(--primary-color-light);
+    padding: 0px 0;
+}
+
+.logo-section {
+    text-align: center;
+    height: 100px;
+    width: 100%;
+}
+
+.logo {
+    max-width: 100%;
+}
+
+.top-logo {
+    transform: scale(0.75);
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-grow: 1;
+    height: auto;
+    padding: 20px 0;
+    width: 100%;
+    background-color: transparent;
+}
+.icon-container {
+    flex-shrink: 0;
+    margin-left: 20%;
+}
+.text-container {
+    margin-left: 10px;
+    font-size: 18px;
+}
+.text-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.icon-style {
+    height: 30px;
+    width: 30px;
+    margin-top: 3px;
+    margin-right: 5px;
+}
+.nav-links a {
+    color: var(--background-color);
+    text-decoration: none;
+    padding: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    font-size: 18px;
+    cursor: pointer;
+    user-select: none;
+}
+.nav-links a:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color-dark);
+    width: 95%;
+    border-radius: 0px 5px 5px 0px;
+    transition: 0.2s ease;
+}
+
+.nav-links a.active-tab:hover {
+  background-color: var(--background-color);
+  color: var(--primary-color-dark);
+  width: 100%;
+}
+
+.nav-links a.active-tab {
+    background-color: var(--background-color);
+    color: var(--primary-color-dark);
+}
+
+.color-change-icon {
+    filter: grayscale(100%) brightness(1) invert(0);
+    transition: filter 0.3s ease;
+}
+.nav-links a:hover .color-change-icon {
+    filter: brightness(0) saturate(100%) invert(16%) sepia(78%) saturate(563%) hue-rotate(194deg) brightness(93%) contrast(89%);
+}
+.nav-links a.active-tab .color-change-icon {
+    filter: brightness(0) saturate(100%) invert(16%) sepia(78%) saturate(563%) hue-rotate(194deg) brightness(93%) contrast(89%);
+}
+.white-line {
+    color: var(--background-color);
+    width: 86%;
+}
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: var(--background-color);
+    padding: 10px 0px 15px 0px;
+}
+.footer span{
+    margin: 0 10px 0px 19px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.footer span:hover{
+    text-decoration: underline;
+}
+.copy-right {
+    color: var(--background-color);
+    margin-bottom: 10px;
+    font-size: 14px;
+}

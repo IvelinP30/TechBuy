@@ -1,0 +1,47 @@
+<div class="nav-bar">
+    <div class="logo-section" style="padding: 20px 5px 10px 5px;">
+        <img src="assets/images/TechBuy_logo.png" alt="Sunrise Logo" class="logo top-logo" style="cursor: pointer" (click)="reload()"/>
+    </div>
+
+    <hr class="white-line">
+
+    <div class="nav-links">
+        <a routerLink="/home" routerLinkActive="active-tab" [routerLinkActiveOptions]="{ exact: true }" class="text-row">
+            <div class="icon-container">
+                <img src="assets/icons/home_white.svg" alt="home icon" class="icon-style color-change-icon" />
+            </div>
+            <div class="text-container">
+                {{ 'overview' | translate}}
+            </div>
+        </a>
+        <a routerLink="/devices-list" routerLinkActive="active-tab" class="text-row">
+            <div class="icon-container">
+                <img src="assets/icons/devices_2_white.svg" alt="devices icon" class="icon-style color-change-icon" />
+            </div>
+            <div class="text-container">
+                {{ 'devices' | translate}}
+            </div>
+        </a>
+
+      <a (click)="onLogout()" class="text-row">
+        <div class="icon-container">
+          <img src="assets/icons/logout.svg" alt="logout icon" class="icon-style color-change-icon"/>
+        </div>
+        <div class="text-container">
+            {{ 'logout' | translate}}
+        </div>
+      </a>
+    </div>
+
+    <hr class="white-line">
+
+    <div class="footer">
+        <span> {{ 'data_privacy' | translate}}</span>
+        <span> {{ 'legal' | translate}}</span>
+        <span> {{ 'imprint' | translate}}</span>
+    </div>
+
+    <span class="copy-right">
+        © 2024 TechBuy LLC
+    </span>
+</div>

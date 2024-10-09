@@ -1,0 +1,21 @@
+<div style="width: 100%; display: flex; justify-content: flex-end;" [ngStyle]="{ 'marginTop' : smallScreenSideNav ? '-50px' : '0'}">
+    <div class="toolbar-container">
+        @if(!inBasket) {
+            <button mat-mini-fab (click)="showSelectedItems()" (mouseenter)="onisSelectedItemsMouseEnter()" (mouseleave)="onisSelectedItemsMouseLeave()">
+                <mat-icon class="icon" [matBadge]="basketItemsCount"> {{ isSelectedItemsovered ? 'shopping_cart_checkout' : 'shopping_cart' }} </mat-icon>
+            </button>
+        }
+        <button mat-mini-fab (click)="toggleTheme()">
+            <mat-icon [ngStyle]="{'color': darkModeEnabled ? '#FFEB3B' : 'darkblue'}"> {{ darkModeEnabled ? "light_mode" : "dark_mode" }} </mat-icon>
+        </button>
+        <button mat-fab extended [matMenuTriggerFor]="languageMenu" class="button">
+            <mat-icon>language</mat-icon>
+            {{ currentLanguage.name }}
+        </button>
+        <mat-menu #languageMenu="matMenu" xPosition="before">  
+            @for(language of languages; track language.id){
+                <button mat-menu-item (click)="setLanguage(language.id)" class="language-menu-option">{{ language.name }}</button>
+            }
+        </mat-menu>
+    </div>
+</div>

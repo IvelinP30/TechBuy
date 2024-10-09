@@ -1,0 +1,30 @@
+<div class="page-wrapper" [class.single-column]="!showSideNav() || showSmallScreenSideNavToggle()">
+  @if(showSideNav()) {
+    @if(smallScreenSideNav) {
+        <app-side-nav [ngClass]="{'side-nav-overlay': showSmallScreenSideNavToggle(), 'open': openSideNav, 'closed': !openSideNav}" />
+    }
+    @if(!smallScreenSideNav) {
+        <app-side-nav />
+    }
+  }
+  <div>
+      @if (showSmallScreenSideNavToggle()){
+          <button mat-icon-button (click)="toggleSideNav()"
+          [ngStyle]="{'position': 'sticky',
+                      'backgroundColor': openSideNav ? '' : 'white',
+                      'top': openSideNav ? '3px' : '5px',
+                      'left': openSideNav ? '3px' : '5px',
+                      'width': openSideNav ? '40px' : '50px',
+                      'height': openSideNav ? '40px' : '50px',
+                      'z-index': '1001',
+                      'display': 'flex',
+                      'justify-content': 'center',
+                      'align-items': 'center'}">
+            <mat-icon [ngStyle]="{ 'transform': openSideNav ? 'scale(1)' : 'scale(1.2)'}">{{ openSideNav ? 'close' : 'menu'}}</mat-icon>
+
+          </button>
+      }
+      <router-outlet></router-outlet>
+  </div>
+
+

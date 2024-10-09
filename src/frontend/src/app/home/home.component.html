@@ -1,0 +1,15 @@
+<div style="position: sticky; top: 0; right: 0; z-index: 500;">
+    <app-toolbar-header />
+</div>
+<div class="homepage">
+    <img src="assets/images/TechBuy_logo.png" alt="Sunrise Logo" class="logo" />
+    <h1>{{ 'welcome' | translate }}, {{ userName }}!</h1>
+    <div class="button-container">
+        <a mat-fab extended routerLink="/devices-list" class="button-link">
+            <span class="button-text">{{ 'devices' | translate}}</span>
+        </a>
+        <div class="overlay" routerLink="/devices-list">
+            <mat-icon class="icon-overlay">arrow_right_alt</mat-icon>
+        </div>
+    </div>
+</div>

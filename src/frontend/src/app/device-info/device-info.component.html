@@ -1,0 +1,168 @@
+<div style="position: sticky; top: 0; right: 0; z-index: 500;">
+  <app-toolbar-header />
+</div>
+<div class="device-name-container">
+<app-header [headerName]="deviceName"></app-header>
+</div>
+
+<div class="device-info-container">
+    <div class="device-image">
+        @if(deviceImage) {
+            <img mat-card-image [src]="deviceImage">
+        }
+        @else {
+            <img mat-card-image [src]="noDeviceImage">
+        }
+    </div>
+    <div class="device-text">
+        @if (deviceColorName) {
+            <div class="color-header">
+                <h2>{{ 'which_color_like' | translate }}?</h2>
+            </div>
+            <div class="color-selection">
+                @for(color of deviceColors; track color){
+                        <div class="circle-color"
+                            [style.backgroundColor]="color.colorCode"
+                            [ngClass]="{ 'selected-color': color.colorCode === selectedColor.colorCode,
+                                         'no-symbol': areAllSelectedColorDevicesOutOfStock(color.colorCode)
+                            }"
+                            (click)="onColorChange(color)">
+                        </div>
+                }
+            </div>
+            <mat-divider class="divider"></mat-divider>
+        }
+        @if (deviceSize) {
+            <div class="storage-header">
+                <h2>{{ 'which_size_prefer' | translate }}?</h2>
+            </div>
+            <div style="overflow-y: auto; max-height: 200px;" [ngStyle]="{ 'width' : smallScreenSideNav ? '95%' : '70%'}">
+            @for(size of allItemSizes; track size){
+                <div class="memory-variant-wrapper">
+                    <label style="display: flex;">
+                        <div class="memory-variant " 
+                        [ngClass]="{
+                            'selected-memory': size.value === selectedSize.value && isSizeAvailable(selectedSize.value),
+                            'out-of-stock': !isSizeAvailable(size.value)
+                            }"
+                            (click)="onSizeChange(size)">
+                            <span class="storage-value">{{ size.value }}</span>
+                            <span class="storage-price">
+                                @if(isSizeAvailable(size.value)) {
+                                    {{ size.price / 100 | number:'1.2-2' }} <span style="font-size: 11px; color: black">€</span>
+                                }
+                                @else {
+                                    {{ 'out_stock' | translate }}
+                                }
+                            </span>
+                        </div>
+                    </label>
+                </div>
+            }
+            </div>
+        }
+        @if (deviceStorage) {
+            <div class="storage-header">
+                <h2>{{ 'storage_need' | translate }}?</h2>
+            </div>
+            <div style="overflow-y: auto; max-height: 200px;" [ngStyle]="{ 'width' : smallScreenSideNav ? '95%' : '70%'}">
+            @for(option of allItemStorages; track option){
+                <div class="memory-variant-wrapper">
+                    <label style="display: flex;">
+                        <div class="memory-variant" 
+                        [ngClass]="{
+                            'selected-memory': option.value === selectedStorage.value && isStorageAvailable(selectedStorage.value),
+                            'out-of-stock': !isStorageAvailable(option.value)
+                            }"
+                            (click)="onStorageChange(option)">
+                            <span class="storage-value">
+                                {{ getStorageValueFormated(option.value).numericValue }}<small style="font-size: 0.8em; margin-left: 1px">{{ getStorageValueFormated(option.value).unit }}</small>
+                            </span>                            <span class="storage-price">
+                                @if(isStorageAvailable(option.value)) {
+                                    {{ option.price / 100 | number:'1.2-2' }} <span style="font-size: 11px; color: black">€</span>
+                                }
+                                @else {
+                                    {{ 'out_stock' | translate }}
+                                }
+                            </span>
+                        </div>
+                    </label>
+                </div>
+            }
+            </div>
+        }
+        <div class="device-availability-section">
+            <div class="device-availability">
+                <div class="device-availability-circle" [style.backgroundColor]="getDeviceAvailabilityColor(deviceAvailability)"></div>
+                <div>
+                    <div class="device-availability-status">{{ getAvailabilityTranslation(getAvailabilityName(deviceAvailability))  }}</div>
+                    @if(deviceAvailability !== "OUT_OF_STOCK") {
+                        <div>{{ 'delivery' | translate }}</div>
+                    }
+                </div>
+            </div>
+            @if(deviceAvailability !== "OUT_OF_STOCK") {
+                <div style="display: flex; align-items: start;">
+                    <mat-icon>local_shipping</mat-icon>
+                    <span class="device-availability-shipping">{{ 'free_shipping' | translate }}</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="price-info-container">
+    <div style="width: 100%; display: flex; justify-content: center;">
+        <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center; width: 80%;">
+            <div>
+                <button class="button back-button" routerLink="/devices-list">
+                    <mat-icon>arrow_back</mat-icon>
+                    @if(!smallScreenSideNav) {
+                        <span style="margin-left: 10px;">{{ 'back' | translate }}</span>
+                    }
+                </button>
+            </div>
+            <div style="text-align: center;">
+                <span class="price">
+                    {{ 'price' | translate }}: {{ devicePrice / 100 | number:'1.2-2' }}
+                    <span style="color: white" 
+                          [ngStyle]="{ 'fontSize': smallScreenSideNav ? '15px' : '25px',
+                                       'marginLeft': smallScreenSideNav ? '0px' : '5px'}">€</span>
+                </span>
+            </div>
+            <div>
+                <button 
+                    class="button add-to-basket-button"
+                    [ngStyle]="{ 'pointer-events': isAddedToBasket || areAllSelectedColorDevicesOutOfStock(selectedColor.colorCode) ? 'none' : 'auto',
+                                 'opacity': areAllSelectedColorDevicesOutOfStock(selectedColor.colorCode) ? '0.7' : '1' 
+                     }"
+                    (click)="addToBasket(selectedDevice)">
+                    @if(!smallScreenSideNav) {
+                        @if(!areAllSelectedColorDevicesOutOfStock(selectedColor.colorCode)){
+                            <span style="margin-right: 10px;">
+                                {{ getButtonTextTranslate() }}
+                            </span>
+                        }
+                        @else{
+                            <span style="margin-right: 10px;">
+                                {{ 'out_stock' | translate }}
+                            </span>
+                        }
+                    }
+                    @if(!areAllSelectedColorDevicesOutOfStock(selectedColor.colorCode)){
+                    <mat-icon 
+                        [ngStyle]="{ transform: isAddedToBasket ? 'scale(1.2)' : 'scale(1)' }" 
+                        class="icon-change-transition">
+                        {{ isAddedToBasket ? 'check_circle' : 'add_shopping_cart' }}
+                    </mat-icon>
+                    }
+                    @else {
+                    <mat-icon >
+                        block
+                    </mat-icon>
+                    }
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

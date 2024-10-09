@@ -1,0 +1,85 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$frontend-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$azure-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+:root {
+  @include mat.all-component-themes($frontend-theme);
+}
+
+@include mat.typography-hierarchy($frontend-theme);
+
+@include mat.color-variants-backwards-compatibility($frontend-theme);
+
+
+html, body { height: 100%; overflow-x: hidden; margin: 0; padding: 0 }
+body { margin: 0; font-family: 'AvenirNextLTW05-Regular', Tahoma; }
+
+:root {
+  --primary-color: #434c81;
+  --primary-color-light: #6a74a5;
+  --primary-color-dark: #2c3563;
+
+  --secondary-color: #FF6F61;
+  --secondary-color-light: #FF9A8D;
+  --secondary-color-dark: #B25045;
+
+  --text-color: #000000;
+  --background-color: #ffffff;
+  
+  --dark-primary-color: #2c3563;
+  --dark-primary-color-light: #3e4e78;
+  --dark-primary-color-dark: #1a2238;
+
+  --dark-secondary-color: #B25045;
+  --dark-secondary-color-light: #d06e6f;
+  --dark-secondary-color-dark: #862f3b;
+
+  --dark-text-color: #000000;
+  --dark-background-color: #f0f0f0;
+}
+
+body.dark-theme {
+  --primary-color: var(--dark-primary-color);
+  --primary-color-light: var(--dark-primary-color-light);
+  --primary-color-dark: var(--dark-primary-color-dark);
+
+  --secondary-color: var(--dark-secondary-color);
+  --secondary-color-light: var(--dark-secondary-color-light);
+  --secondary-color-dark: var(--dark-secondary-color-dark);
+
+  --text-color: var(--dark-text-color);
+  --background-color: var(--dark-background-color);
+}
+
+
+::-webkit-scrollbar {
+  width: 18px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color-light);;
+  border-radius: 10px;
+  border: 3px solid var(--background-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color-dark);
+}
+

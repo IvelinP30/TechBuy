@@ -1,0 +1,74 @@
+.page-wrapper {
+  height: 100vh;
+  position: relative;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 1fr;
+  background-color: var(--background-color);
+
+  &.single-column {
+    grid-template-columns: 1fr;
+  }
+}
+
+.side-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+  transform: translateX(-100%);
+
+  &.open {
+    transform: translateX(0);
+  }
+
+  &.closed {
+    transform: translateX(-100%);
+  }
+}
+
+:host ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: var(--background-color);
+}
+:host ::ng-deep .mdc-text-field--filled {
+  border-radius: 5px;
+  border-top: solid 2px #dcdcdc;
+  border-right: solid 2px #dcdcdc;
+  border-left: solid 2px #dcdcdc;
+}
+:host ::ng-deep .mat-mdc-select-value-text {
+  font-weight: 600;
+  white-space: nowrap;
+}
+:host ::ng-deep .mat-mdc-select-arrow-wrapper {
+  display: none;
+}
+:host ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+  border-bottom-color: #a6a69f;
+}
+:host ::ng-deep .mdc-line-ripple::before {
+  z-index: 1;
+  border-bottom-width: 2px;
+}
+:host ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+  border-bottom-color: var(--primary-color-dark);
+  border-bottom-width: 3px;
+}
+
+:host ::ng-deep .mdc-text-field--filled:not(mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label {
+  color: var(--text-color);
+}
+:host ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: var(--text-color);
+}
+:host ::ng-deep .mdc-circular-progress__indeterminate-circle-graphic {
+  stroke: var(--primary-color-light) !important;
+}
+:host ::ng-deep .mat-accent.mat-mdc-fab, .mat-accent.mat-mdc-mini-fab {
+  color: var(--text-color);
+}

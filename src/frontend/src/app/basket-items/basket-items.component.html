@@ -1,0 +1,122 @@
+<div style="position: sticky; top: 0; right: 0; z-index: 500;">
+    <app-toolbar-header [inBasket]="true" />
+</div>
+@if(!orderDone) {
+<div class="main-container">
+    <app-header [headerName]="getHeaderName(stepper)"></app-header>
+
+    <mat-stepper linear #stepper style="margin-top: 50px">
+        <mat-step [editable]="true">
+            <div>
+                <ng-template matStepLabel>{{ 'devices' | translate }}</ng-template>
+            </div>
+        </mat-step>
+        <mat-step [editable]="false" [completed]="stepper.selectedIndex === 1">
+            <div>
+                <ng-template matStepLabel>{{ 'order_details' | translate }}</ng-template>
+            </div>
+        </mat-step>
+    </mat-stepper>
+    @if(stepper.selectedIndex === 0) {
+
+    <div class="cards-wrapper">
+        <div class="cards-container">
+                @if(items.length > 0) {
+                    @for(item of items; track item) {
+                        <app-sale-card [item]="item" [inBasket]="true" (removeItem)="removeItem(item)"></app-sale-card>
+                    }
+                }
+                @else {
+                    <p>{{ 'no_items_basket' | translate }}</p>
+                }
+            </div>
+        </div>
+    } 
+
+    @else if(stepper.selectedIndex === 1) {
+        <div class="form-container">
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'full_name' | translate }}</mat-label>
+                <input matInput required [(ngModel)]="orderDetails.fullName" name="fullName" placeholder="Enter your full name" />
+            </mat-form-field>
+            
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'phone_number' | translate }}</mat-label>
+                <input matInput required type="tel" [(ngModel)]="orderDetails.phoneNumber" name="phoneNumber" placeholder="e.g. +359 88 123 4567" />
+            </mat-form-field>
+            
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'shipping_address' | translate }}</mat-label>
+                <textarea matInput required [(ngModel)]="orderDetails.shippingAddress" name="shippingAddress" placeholder="Enter your shipping address"></textarea>
+            </mat-form-field>
+            
+            <mat-form-field appearance="fill">
+                <mat-label>{{ 'payment_method' | translate }}</mat-label>
+                <mat-select required [(ngModel)]="orderDetails.paymentMethod" name="paymentMethod">
+                    <mat-option value="creditCard">{{ 'credit_card' | translate }}</mat-option>
+                    <mat-option value="paypal">PayPal</mat-option>
+                    <mat-option value="bankTransfer">{{ 'bank_transfer' | translate }}</mat-option>
+                </mat-select>
+            </mat-form-field>            
+        </div>
+    }
+
+    <div class="price-info-container">
+        <div style="width: 100%; display: flex; justify-content: center;">
+            <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center; width: 80%;">
+
+                <div>
+                    <button class="button back-button" (click)="back(stepper)">
+                        <mat-icon>arrow_back</mat-icon>
+                        @if(!smallScreenSideNav) {
+                            <span style="margin-left: 10px;">{{ 'back' | translate }}</span>
+                        }
+                    </button>
+                </div>
+
+                <div style="text-align: center;">
+                    <span class="price">
+                        {{ 'total_price' | translate }}: {{ totalItemsPrice / 100 | number:'1.2-2' }}
+                        <span style="color: white" 
+                              [ngStyle]="{ 'fontSize': smallScreenSideNav ? '15px' : '25px',
+                                           'marginLeft': smallScreenSideNav ? '0px' : '5px'}">€</span>
+                    </span>
+                </div>
+
+                <div>
+                    <button class="button continue-button"
+                            [ngStyle]="{ 'pointer-events': items.length === 0 || ( !correctOrderDetails() && isLastStep(stepper) ) ? 'none' : 'auto',
+                                         'opacity': items.length === 0 || ( !correctOrderDetails() && isLastStep(stepper) ) ?  '0.7' : '1'  }" 
+                            (click)="continue(stepper)">
+                        @if(!smallScreenSideNav) {
+                            @if(!isLastStep(stepper)){
+                                <span style="margin-right: 10px;">{{ 'continue' | translate }}</span>
+                            }
+                            @else {
+                                <span style="margin-right: 10px;">{{ 'order' | translate }}</span>
+                            }
+                        }
+                        <mat-icon> {{ isLastStep(stepper) ? 'check_circle' : 'arrow_forward' }}</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@else {
+    <div class="thank-you-message">
+        <div>
+            <h1>{{ 'thank_for_order' | translate }}!</h1>
+        </div>
+        <div>
+            <button  class="button back-button" style="width: 250px;" (click)="returnAfterOrder()">
+                <mat-icon style="margin-right: 10px">arrow_back</mat-icon>
+                {{ 'back_to_shopping' | translate }}
+            </button>
+        </div>
+    </div>
+}
+
+  

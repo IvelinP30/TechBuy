@@ -1,0 +1,263 @@
+.device-name-container {
+    width: 95%;
+    margin: 0 auto 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-items: stretch;
+}
+.device-info-container {
+    max-width: 1276px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    background-color: var(--background-color);
+    column-gap: 20px;
+    padding-bottom: 120px;
+    overflow-y: auto;
+
+    @media (max-width: 900px) {
+        flex-direction: column;
+        overflow-x: hidden;
+        padding-left: 5px;
+    }
+}
+
+.device-image {
+    position: sticky;
+    top: 100px;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'AvenirNextLTW05-Regular-Bold', Tahoma;
+    width: auto;
+    height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    @media (max-width: 900px) {
+        top: 0;
+        height: 300px;
+    }
+}
+
+.device-image img {
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 300px;
+    object-fit: contain;
+
+    @media (max-width: 900px) {
+        min-width: 200px;
+    }
+}
+.device-text {
+    max-width: 520px;
+    min-width: 520px;
+    @media (max-width: 900px) {
+        min-width: 350px;
+        padding-left: 5px;
+    }
+}
+.divider {
+    height: 1px;
+    color: var(--text-olor);
+    margin: 24px 0px;
+    opacity: 0.25;
+}
+
+.color-header {
+    display: flex;
+    font-size: 16px;
+    align-items: center;
+}
+.color-selection {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 10px;
+}
+.circle-color {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid var(--background-color);;
+}
+.no-symbol {
+    width: 40;
+    height: 40;
+    border: 1px solid rgb(85, 83, 83);
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+.no-symbol::after {
+    content: '';
+    width: 2px;
+    height: 100%;
+    background-color: rgb(85, 83, 83);
+    position: absolute;
+    transform: rotate(-45deg);
+}
+
+.storage-header {
+    margin-top: 19px;
+    margin-bottom: 16px;
+    color: #3d3935;
+}
+.memory-variant-wrapper {
+    padding-bottom: 4px;
+}
+.memory-variant {
+    width: 85%;
+    display: flex;
+    border: 1px solid #b3aeaa;
+    border-radius: 8px;
+    justify-content: space-between;
+    padding: 14px 14px 14px 16px;
+    font-weight: bolder;
+    font-family: 'AvenirNextLTW05-Regular-Bold', Tahoma;
+    background-color: var(--background-color);;
+    cursor: pointer;
+
+    &.out-of-stock {
+        cursor: default;
+        opacity: 0.5;
+        background-color: #e6e3df;
+        pointer-events: none;
+    }
+    @media (max-width: 900px) {
+        width: 95%;
+    }
+}
+.storage-value {
+    font-size: 16px;
+    line-height: 24px;
+}
+.storage-price {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 4px 6px;
+    background-color: #f7f6f5;
+}
+.device-availability-section {
+    display: flex;
+    column-gap: 32px;
+    margin-top: 35px;
+    width: 70%;
+
+    @media (max-width: 900px) {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+.device-availability {
+    display: flex;
+    align-items: center;
+}
+.device-availability-circle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+.device-availability-status {
+    font-weight: bold;
+    font-family: 'AvenirNextLTW05-Regular-Bold', Tahoma;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 0;
+    margin-right: 4px;
+    color: #333;
+}
+.device-availability-shipping {
+    font-family: 'AvenirNextLTW05-Regular-Bold', Tahoma;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    color: #333;
+    margin-left: 8px;
+}
+.price-info-container {
+    position: fixed;
+    bottom: 0;
+    left: 350px;
+    width: calc(100% - 400px);
+    background-color:#A2D8D0;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0px 5px 15px 1px;
+    z-index: 1000;
+    
+    @media(max-width: 900px) {
+        width: 100%;
+        left: 0;
+    }
+}
+.price {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'AvenirNextLTW05-Regular-Bold', Tahoma;
+    color: white;
+    line-height: 24px;
+
+    @media(max-width: 900px) {
+        font-size: 20px;
+    }
+}
+
+.button {
+    width: 150px;
+    border-radius: 28px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    padding: 14px 24px;
+    text-decoration: none;
+    border: 0;
+    background-color: #b08c8c;
+    color: var(--background-color);
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.back-button {
+    background-color: var(--secondary-color-light);
+    width: 150px;
+    @media (max-width: 900px) {
+        width: 80px;
+    }
+}
+.back-button:hover {
+    background-color: var(--secondary-color-dark);
+}
+.add-to-basket-button {
+    background-color: var(--primary-color-light);
+    width: 220px;
+    @media (max-width: 900px) {
+        width: 80px;
+    }
+}
+.add-to-basket-button:hover {
+    background-color: var(--primary-color-dark);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.selected-color {
+    outline: 4px solid var(--secondary-color-dark);
+    border: 2px solid #fff;
+}
+.selected-memory {
+    border-radius: 8px;
+    border: 4px solid var(--secondary-color-dark);
+}
+.icon-change-transition {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}

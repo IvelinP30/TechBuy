@@ -1,0 +1,100 @@
+<div style="position: sticky; top: 0; right: 0; z-index: 500;">
+  <app-toolbar-header />
+</div>
+<div class="main-container">
+  <app-header [headerName]="getHeaderName()"></app-header>
+
+  <div class="filter-container">
+    <mat-form-field>
+    <mat-label>{{ 'type_device' | translate }}</mat-label>
+    <mat-select
+    [(value)]="selectedType"
+    (focus)="onSelectFocus()"
+    (closed)="onSelectClose()"
+    (selectionChange)="onDeviceTypeSelect() ">
+    <mat-option>{{ 'all' | translate }}</mat-option>
+    @for(type of sortedDeviceTypes; track type) {
+      <mat-option [value]="type">{{ getTypeTranslation(type) }}</mat-option>
+    }
+  </mat-select>
+    <mat-icon matSuffix class="select-icon" style="transform: scale(1.1); color: #a6a69f"
+    [ngStyle]="{'color': selectOpen ? '#434c81' : '#a6a69f'}">keyboard_arrow_down</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>{{ 'select_brand' | translate }}</mat-label>
+
+    <mat-select [formControl]="brandControl" (selectionChange)="onBrandSelect()" multiple>
+      <input type="text" placeholder="Search..." [(ngModel)]="brandSearch" (ngModelChange)="filterBrands()"
+              style="width: 80%; padding: 8px 12px; height: 15px; font-size: 15px; background-color: transparent; outline: none; border: none;" />
+        @if (brandSearch) {
+            <mat-icon matSuffix mat-icon-button aria-label="Clear"
+                      style="cursor: pointer; margin-top: 10px; margin-bottom: -10px" (click)="clearSearchBrandInput()">
+              close
+            </mat-icon>
+        }
+      <hr style="color: #434c81; text-align: center; width: 95%;" />
+      @for(brand of filteredBrands; track brand) {
+            <mat-option [value]="brand">{{ brand }}</mat-option>
+      }
+      @empty {
+        <p class="empty-list">{{ 'no_matching_brand' | translate }}</p>
+      }
+    </mat-select>
+
+    @if (brandControl.value?.length !== 0) {
+      <mat-icon matSuffix mat-icon-button aria-label="Clear"
+                style="cursor: pointer;" (click)="clearSelectBrandInput()">
+        close
+      </mat-icon>
+    }
+  </mat-form-field>
+
+  <div class="search-model-container">
+    <mat-form-field style="width: 100%">
+      <mat-label>{{ 'search_model' | translate }}</mat-label>
+      <mat-icon matPrefix style="transform: scale(1.3); color: #a6a69f; cursor: pointer"
+      [ngStyle]="{'color': inputSelected ? '#434c81' : '#a6a69f'}" (click)="filterSaleItems()">search</mat-icon>
+      <input type="text"
+              matInput
+              (focus)="onInputFocus()"
+              (blur)="onInputBlur()"
+              [formControl]="searchModelControl"
+              [matAutocomplete]="auto"
+              (keydown.enter)="filterSaleItems(); closeAutocompletePanel()">
+      @if (searchModelControl.value) {
+          <mat-icon matSuffix mat-icon-button aria-label="Clear"
+                    style="cursor: pointer;" (click)="clearSearchModelInput()">
+            close
+          </mat-icon>
+      }
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+        @for (option of (filteredOptions | async); track option) {
+          <mat-option [value]="option ">{{ option }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</div>
+
+@if(loading) {
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+}
+@else {
+  <div class="cards-wrapper">
+    <div class="cards-container">
+      @if(filteredSaleItems.length > 0) {
+          @for(item of filteredSaleItems; track item) {
+              <app-sale-card [item]="item"
+                              (viewDevice)="viewDevice(item)"></app-sale-card>
+          }
+      }
+      @else {
+          <p>{{ 'no_devices' | translate }}.</p>
+      }
+    </div>
+  </div>
+}
+</div>
