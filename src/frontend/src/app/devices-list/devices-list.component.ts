@@ -158,32 +158,37 @@ export class DevicesListComponent implements OnInit {
   onBrandSelect(): void {
     this.filterSaleItems();
   }
-
-  filterSaleItems(): void {
-    const searchValue = this.searchModelControl.value?.toLowerCase() || '';
-    const searchTokens = searchValue.split(/\s+/).filter(token => token !== '');
-    const selectedBrands: string[] = this.brandControl.value || [];
-
-    this.filteredSaleItems = this.saleItems.filter(item => {
-      const matchesType = this.selectedType
-        ? item.type.includes(FormattingUtil.undoFormatString(this.selectedType))
+  private filterItemsBySearch(searchValue: string, selectedBrands: string[], selectedType: string | null) {
+    const searchTokens = searchValue
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(token => token !== '');
+  
+    return this.saleItems.filter(item => {
+      const matchesType = selectedType
+        ? item.type.includes(FormattingUtil.undoFormatString(selectedType))
         : true;
-
+  
       const matchesBrands = selectedBrands.length
         ? selectedBrands.includes(item.category)
         : true;
-
+  
       const matchesSearch = searchTokens.length
         ? searchTokens.every(token =>
-          item.device.some((device: { element: { name: string; }; }) =>
-            device.element.name.toLowerCase().includes(token)
+            item.element.name.toLowerCase().includes(token)
           )
-        )
         : true;
-
+  
       return matchesType && matchesBrands && matchesSearch;
     });
-
+  }
+  
+  filterSaleItems(): void {
+    const searchValue = this.searchModelControl.value || '';
+    const selectedBrands: string[] = this.brandControl.value || [];
+  
+    this.filteredSaleItems = this.filterItemsBySearch(searchValue, selectedBrands, this.selectedType);
+  
     this.searchService.setSearchValue(searchValue);
     this.searchService.setSelectedType(this.selectedType);
     this.searchService.setSelectedBrands(selectedBrands);
@@ -193,24 +198,14 @@ export class DevicesListComponent implements OnInit {
     this.filteredOptions = this.searchModelControl.valueChanges.pipe(
       startWith(''),
       map(value => {
-      const searchValue = (value || '').trim();
-        const filteredNames = ArrayUtil.filter(this.deviceNames, searchValue);
+        const searchValue = (value || '').trim();
         const selectedBrands: string[] = this.brandControl.value || [];
-
-        return filteredNames.filter(name => {
-          return this.saleItems.some(item => {
-            const matchesType = this.selectedType
-              ? item.type.includes(FormattingUtil.undoFormatString(this.selectedType))
-              : true;
-
-            const matchesBrands = selectedBrands.length > 0
-              ? selectedBrands.includes(item.category)
-              : true;
-
-            return matchesType && matchesBrands && item.element.name === name;
-          });
-        }
-      ).slice(0, 10);
+  
+        const filteredItems = this.filterItemsBySearch(searchValue, selectedBrands, this.selectedType);
+  
+        const filteredNames = filteredItems.map(item => item.element.name);
+  
+        return filteredNames.slice(0, 10);
       })
     );
   }
