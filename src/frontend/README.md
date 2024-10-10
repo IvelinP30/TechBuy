@@ -50,15 +50,6 @@ Once the app is running locally:
 - You can switch languages between Bulgarian and English via the language selector.
 - Dark mode can be toggled through the theme switcher in the UI.
 
-## Scripts
-
-Here are the available npm scripts for development and testing:
-
-- npm start: Runs the application in development mode using ng serve.
-- npm run build: Builds the Angular application for production.
-- npm run watch: Watches for changes and builds the application in development mode.
-- npm test: Runs unit tests using Karma and Jasmine.
-
 ## Acknowledgments
 
 - Angular: For providing the framework.
