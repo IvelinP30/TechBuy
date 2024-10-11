@@ -33,17 +33,17 @@ Steps To Buils and run angular frontend application:
 4. Build for production: yarn build --prod
 5. Serve the application locally: yarn start
 
-Steps To Run Both Frontend and backedn as single jar:
+Steps To Run Both Frontend and backend as single jar:
 1. Build: Go to TechBuy directory and run command:  mvn clean install 
 2. Run : Go to target folder and run java -jar techbuy-1.0.0-SNAPSHOT-runner.jar
 
-The app will be available at http://localhost:4200.
+The app will be available at http://localhost:8080.
 
 ## Usage
 
 Once the app is running locally:
 
-- Open your browser and visit http://localhost:4200.
+- Open your browser and visit http://localhost:8080.
 - You will be prompted to log in using Microsoft Authentication.
 - You can switch languages between Bulgarian and English via the language selector.
 - Dark mode can be toggled through the theme switcher in the UI.
