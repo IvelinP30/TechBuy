@@ -17,9 +17,7 @@ It also integrates Microsoft authentication for secure login and supports two la
 
 ## Installation
 
-Clone the repository:
-
-`git clone https://github.com/your-username/techbuy-frontend.git`
+Clone the repository
 
 Software Needs to be installed:
 
